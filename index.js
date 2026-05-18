@@ -105,8 +105,25 @@ function updateTotalAmount() {
 }
 
 // // Function to Save and Load the expenses
-const saveBtn = document.getElementById("save-btn").addEventListener("click", saveExpenses);
-const loadBtn = document.getElementById("load-btn").addEventListener("click", loadExpenses);
+const saveBtn = document
+  .getElementById("save-btn")
+  .addEventListener("click", saveExpenses);
+
+const loadBtn = document
+  .getElementById("load-btn")
+  .addEventListener("click", loadExpenses);
+  
+const resetBtn = document
+  .getElementById("reset-btn")
+  .addEventListener("click", () => {
+    const confirmReset = confirm(
+      "Are you sure you want to delete all expenses?",
+    );
+
+    if (confirmReset) {
+      resetExpenses();
+    }
+  });
 
 function saveExpenses() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
@@ -122,4 +139,14 @@ function loadExpenses() {
 
     updateTotalAmount();
   }
+}
+
+function resetExpenses() {
+  expenses = [];
+
+  displayExpenses(expenses);
+  updateTotalAmount();
+
+  // remove saved expenses
+  localStorage.removeItem("expenses");
 }
