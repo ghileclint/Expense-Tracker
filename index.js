@@ -39,7 +39,6 @@ expenseForm.addEventListener("submit", (e) => {
 });
 
 expenseList.addEventListener("click", (e) => {
-
   // Delete
   if (e.target.classList.contains("delete-btn")) {
     const id = parseInt(e.target.dataset.id);
@@ -103,4 +102,24 @@ function displayExpenses(expenses) {
 function updateTotalAmount() {
   const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
   totalAmount.textContent = total.toFixed(2);
+}
+
+// // Function to Save and Load the expenses
+const saveBtn = document.getElementById("save-btn").addEventListener("click", saveExpenses);
+const loadBtn = document.getElementById("load-btn").addEventListener("click", loadExpenses);
+
+function saveExpenses() {
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+
+function loadExpenses() {
+  const storedExpenses = localStorage.getItem("expenses");
+
+  if (storedExpenses) {
+    expenses = JSON.parse(storedExpenses);
+
+    displayExpenses(expenses);
+
+    updateTotalAmount();
+  }
 }
